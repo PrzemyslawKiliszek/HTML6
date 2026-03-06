@@ -167,6 +167,8 @@
             border: 5px solid white;
             touch-action: none;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            /* Wichtig: Die Blase erscheint 60px über dem Finger */
+            margin-top: -60px;
         }
         
         .message {
@@ -256,6 +258,18 @@
                 height: 75px;
                 font-size: 28px;
                 border-width: 4px;
+                /* Auf Smartphone etwas weniger Abstand */
+                margin-top: -50px;
+            }
+        }
+
+        /* Für sehr kleine Bildschirme */
+        @media (max-width: 380px) {
+            .h-plus {
+                width: 65px;
+                height: 65px;
+                font-size: 24px;
+                margin-top: -45px;
             }
         }
     </style>
@@ -442,7 +456,6 @@
             if (!gameActive || dragging) return;
             
             const acidBubble = acidElement.querySelector('.bubble');
-            const rect = acidBubble.getBoundingClientRect();
             const clientX = e.clientX || (e.touches ? e.touches[0].clientX : 0);
             const clientY = e.clientY || (e.touches ? e.touches[0].clientY : 0);
             
@@ -454,7 +467,7 @@
                 reaction.acid.conjugate : reaction.base.conjugate;
             acidBubble.innerHTML = conjugateBase;
             
-            // Erstelle H⁺ Element (jetzt größer!)
+            // Erstelle H⁺ Element - Position wird später in onMove aktualisiert
             hPlusElement = document.createElement('div');
             hPlusElement.className = 'h-plus';
             hPlusElement.textContent = 'H⁺';
@@ -478,6 +491,7 @@
                     if (moveX && moveY) {
                         hPlusElement.style.left = moveX + 'px';
                         hPlusElement.style.top = moveY + 'px';
+                        // Der margin-top im CSS sorgt dafür, dass die Blase über dem Finger schwebt
                     }
                 }
             }
