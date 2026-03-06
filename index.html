@@ -150,8 +150,8 @@
         
         .h-plus {
             position: fixed;
-            width: 60px;
-            height: 60px;
+            width: 85px;
+            height: 85px;
             border-radius: 50%;
             background: linear-gradient(145deg, #ff6b6b, #ff3838);
             color: white;
@@ -159,13 +159,14 @@
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 24px;
-            box-shadow: 0 8px 25px rgba(255,56,56,0.6);
+            font-size: 32px;
+            box-shadow: 0 8px 30px rgba(255,56,56,0.7);
             z-index: 10000;
             pointer-events: none;
             transform: translate(-50%, -50%);
-            border: 4px solid white;
+            border: 5px solid white;
             touch-action: none;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
         
         .message {
@@ -251,9 +252,10 @@
             }
             
             .h-plus {
-                width: 50px;
-                height: 50px;
-                font-size: 20px;
+                width: 75px;
+                height: 75px;
+                font-size: 28px;
+                border-width: 4px;
             }
         }
     </style>
@@ -271,6 +273,7 @@
             <button class="reaction-btn" data-reaction="ch3cooh-h2o">CH₃COOH + H₂O</button>
             <button class="reaction-btn" data-reaction="ch3coo-h3o">CH₃COO⁻ + H₃O⁺</button>
             <button class="reaction-btn" data-reaction="h2so4-h2o">H₂SO₄ + H₂O</button>
+            <button class="reaction-btn" data-reaction="h3o-oh">H₃O⁺ + OH⁻</button>
         </div>
 
         <div class="game-area">
@@ -339,6 +342,11 @@
                 acid: { formula: 'H₂SO₄', conjugate: 'HSO₄⁻' },
                 base: { formula: 'H₂O', conjugate: 'H₃O⁺' },
                 equation: 'H₂SO₄ + H₂O → HSO₄⁻ + H₃O⁺'
+            },
+            'h3o-oh': {
+                acid: { formula: 'H₃O⁺', conjugate: 'H₂O' },
+                base: { formula: 'OH⁻', conjugate: 'H₂O' },
+                equation: 'H₃O⁺ + OH⁻ → H₂O + H₂O'
             }
         };
 
@@ -359,11 +367,18 @@
             mol2.innerHTML = createMoleculeHTML(reaction.base.formula);
             
             // Speichere, welches Molekül die Säure ist
-            acidElement = reaction.acid.formula === 'HCl' || reaction.acid.formula === 'HNO₃' || 
-                         reaction.acid.formula === 'CH₃COOH' || reaction.acid.formula === 'H₂SO₄' ||
-                         reaction.acid.formula === 'H₃O⁺' || reaction.acid.formula === 'H₂O' && currentReaction === 'nh3-h2o' ? 
-                         mol1 : mol2;
-            baseElement = acidElement === mol1 ? mol2 : mol1;
+            if (reaction.acid.formula === 'HCl' || 
+                reaction.acid.formula === 'HNO₃' || 
+                reaction.acid.formula === 'CH₃COOH' || 
+                reaction.acid.formula === 'H₂SO₄' ||
+                reaction.acid.formula === 'H₃O⁺' || 
+                (reaction.acid.formula === 'H₂O' && currentReaction === 'nh3-h2o')) {
+                acidElement = mol1;
+                baseElement = mol2;
+            } else {
+                acidElement = mol2;
+                baseElement = mol1;
+            }
             
             // Reset
             document.getElementById('equation').classList.remove('show');
@@ -391,7 +406,6 @@
             if (!gameActive || dragging) return;
             
             const moleculeWrapper = element.closest('.molecule-wrapper');
-            const reaction = reactions[currentReaction];
             
             // Prüfe ob das angeklickte Molekül die Säure ist
             const isAcid = (moleculeWrapper === acidElement);
@@ -440,7 +454,7 @@
                 reaction.acid.conjugate : reaction.base.conjugate;
             acidBubble.innerHTML = conjugateBase;
             
-            // Erstelle H⁺ Element
+            // Erstelle H⁺ Element (jetzt größer!)
             hPlusElement = document.createElement('div');
             hPlusElement.className = 'h-plus';
             hPlusElement.textContent = 'H⁺';
