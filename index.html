@@ -25,9 +25,9 @@
         .game-container {
             background-color: rgba(255, 255, 255, 0.98);
             border-radius: 25px;
-            padding: 15px;
+            padding: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            max-width: 850px;
+            max-width: 900px;
             width: 100%;
             max-height: 95vh;
             overflow-y: auto;
@@ -37,9 +37,8 @@
         h1 {
             text-align: center;
             color: #333;
-            margin: 5px 0 15px 0;
-            font-size: clamp(20px, 5vw, 28px);
-            padding: 0 5px;
+            margin: 5px 0 20px 0;
+            font-size: clamp(22px, 5vw, 28px);
         }
         
         .reaction-selector {
@@ -47,32 +46,27 @@
             flex-wrap: wrap;
             gap: 8px;
             justify-content: center;
-            margin-bottom: 15px;
-            padding: 5px;
+            margin-bottom: 25px;
         }
         
         .reaction-btn {
-            padding: 10px 12px;
+            padding: 12px 16px;
             border: none;
             border-radius: 30px;
             background-color: #f0f0f0;
             cursor: pointer;
-            font-size: clamp(12px, 3.5vw, 14px);
+            font-size: clamp(13px, 3.5vw, 15px);
             transition: all 0.2s;
-            min-width: 65px;
+            min-width: 70px;
             touch-action: manipulation;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             font-weight: 500;
         }
         
-        .reaction-btn:active {
-            transform: scale(0.95);
-            background-color: #e0e0e0;
-        }
-        
         .reaction-btn.active {
             background-color: #667eea;
             color: white;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
         
         .game-area {
@@ -80,21 +74,19 @@
             flex-direction: column;
             align-items: center;
             gap: 20px;
-            padding: 10px 5px;
         }
         
-        .instruction-box {
-            background: linear-gradient(145deg, #f8f9ff, #e8e9ff);
-            padding: 12px 15px;
-            border-radius: 50px;
+        .instruction {
+            background: linear-gradient(145deg, #f0f4ff, #e6ecff);
+            padding: 15px 20px;
+            border-radius: 40px;
             width: 100%;
             text-align: center;
-            font-size: clamp(14px, 4vw, 16px);
-            color: #4a5568;
+            font-size: clamp(15px, 4vw, 17px);
+            color: #2c3e50;
             font-weight: 500;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
             border: 2px solid white;
-            margin-bottom: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         
         .molecules {
@@ -102,43 +94,38 @@
             justify-content: center;
             align-items: center;
             width: 100%;
-            gap: 10px;
+            gap: 15px;
             flex-wrap: wrap;
+            margin: 10px 0;
         }
         
         .molecule-wrapper {
             flex: 1;
-            min-width: 140px;
+            min-width: 160px;
             text-align: center;
-            position: relative;
         }
         
         .bubble {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: min(160px, 40vw);
-            height: min(160px, 40vw);
+            width: min(180px, 40vw);
+            height: min(180px, 40vw);
             border-radius: 50%;
-            background: linear-gradient(145deg, #ffffff, #f0f0f0);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            font-size: clamp(18px, 6vw, 26px);
+            background: linear-gradient(145deg, #ffffff, #f5f5f5);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            font-size: clamp(20px, 6vw, 28px);
             font-weight: bold;
             margin: 10px auto;
             position: relative;
             transition: all 0.3s ease;
-            border: 4px solid transparent;
+            border: 4px solid #fff;
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
-            user-select: none;
         }
         
-        .bubble:active {
-            transform: scale(0.95);
-        }
-        
-        .bubble.acid-clickable {
-            animation: gentlePulse 2s infinite;
+        .bubble.acid-bubble {
+            animation: pulse 2s infinite;
             border-color: #667eea;
         }
         
@@ -148,25 +135,14 @@
             transform: scale(1.02);
         }
         
-        .bubble.wrong-choice {
-            border-color: #ff4757;
-            animation: shake 0.3s ease-in-out;
-        }
-        
-        @keyframes gentlePulse {
+        @keyframes pulse {
             0% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.5); }
-            70% { box-shadow: 0 0 0 15px rgba(102, 126, 234, 0); }
+            70% { box-shadow: 0 0 0 20px rgba(102, 126, 234, 0); }
             100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0); }
         }
         
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-8px); }
-            75% { transform: translateX(8px); }
-        }
-        
         .arrow {
-            font-size: clamp(30px, 8vw, 45px);
+            font-size: clamp(35px, 8vw, 50px);
             color: #666;
             margin: 0 5px;
             font-weight: 300;
@@ -174,8 +150,8 @@
         
         .h-plus {
             position: fixed;
-            width: min(55px, 12vw);
-            height: min(55px, 12vw);
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             background: linear-gradient(145deg, #ff6b6b, #ff3838);
             color: white;
@@ -183,23 +159,23 @@
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: clamp(16px, 5vw, 22px);
-            box-shadow: 0 8px 20px rgba(255,56,56,0.5);
-            z-index: 9999;
+            font-size: 24px;
+            box-shadow: 0 8px 25px rgba(255,56,56,0.6);
+            z-index: 10000;
             pointer-events: none;
             transform: translate(-50%, -50%);
+            border: 4px solid white;
             touch-action: none;
-            border: 3px solid white;
         }
         
         .message {
             text-align: center;
-            font-size: clamp(14px, 4vw, 17px);
+            font-size: clamp(15px, 4vw, 18px);
             color: #333;
             min-height: 70px;
-            padding: 15px;
+            padding: 15px 20px;
             background-color: #ffffff;
-            border-radius: 20px;
+            border-radius: 25px;
             width: 100%;
             box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
             border: 1px solid #e0e0e0;
@@ -208,13 +184,14 @@
             justify-content: center;
             font-weight: 500;
             line-height: 1.4;
+            margin: 10px 0;
         }
         
         .reaction-equation {
-            font-size: clamp(16px, 5vw, 22px);
+            font-size: clamp(18px, 5vw, 24px);
             font-weight: bold;
-            color: #2c3e50;
-            padding: 18px 12px;
+            color: #1e3c72;
+            padding: 20px;
             background: linear-gradient(145deg, #bbdefb, #90caf9);
             border-radius: 50px;
             width: 100%;
@@ -222,8 +199,8 @@
             opacity: 0;
             transition: opacity 0.4s ease;
             border: 3px solid white;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            margin: 5px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            margin: 10px 0;
         }
         
         .reaction-equation.show {
@@ -233,23 +210,21 @@
         .footer {
             width: 100%;
             text-align: center;
-            margin-top: 15px;
-            padding: 12px 5px;
+            margin-top: 20px;
+            padding: 15px;
             border-top: 2px solid #e0e0e0;
-            font-size: clamp(12px, 3.5vw, 15px);
+            font-size: clamp(13px, 3.5vw, 16px);
             color: #666;
             font-weight: 500;
-            background: rgba(255,255,255,0.5);
-            border-radius: 30px;
         }
         
         .reset-btn {
-            padding: 15px 30px;
+            padding: 16px 35px;
             border: none;
             border-radius: 40px;
             background: linear-gradient(145deg, #667eea, #5a67d8);
             color: white;
-            font-size: clamp(14px, 4vw, 18px);
+            font-size: clamp(16px, 4vw, 19px);
             font-weight: bold;
             cursor: pointer;
             transition: all 0.2s;
@@ -257,45 +232,35 @@
             width: 100%;
             max-width: 300px;
             margin: 5px auto;
-            border: 2px solid white;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            border: 3px solid white;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.5);
         }
         
         .reset-btn:active {
             transform: scale(0.95);
-            background: linear-gradient(145deg, #5a67d8, #4c51bf);
-        }
-        
-        .attempt-counter {
-            font-size: clamp(12px, 3.5vw, 14px);
-            color: #888;
-            margin: 5px 0;
         }
         
         @media (max-width: 600px) {
             .game-container {
-                padding: 12px;
-                max-height: 98vh;
-            }
-            
-            .molecules {
-                gap: 5px;
+                padding: 15px;
             }
             
             .bubble {
-                width: min(140px, 38vw);
-                height: min(140px, 38vw);
+                width: min(150px, 35vw);
+                height: min(150px, 35vw);
             }
             
-            .instruction-box {
-                padding: 10px;
+            .h-plus {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
             }
         }
     </style>
 </head>
 <body>
     <div class="game-container">
-        <h1>🧪 Säure oder Base? 🧪</h1>
+        <h1>🧪 Brønsted-Säure-Base-Reaktionen 🧪</h1>
         
         <div class="reaction-selector">
             <button class="reaction-btn active" data-reaction="hcl-h2o">HCl + H₂O</button>
@@ -309,8 +274,8 @@
         </div>
 
         <div class="game-area">
-            <div class="instruction-box" id="instruction">
-                🔍 Überlege: Welches Molekül gibt H⁺ ab? Tippe es an!
+            <div class="instruction" id="instruction">
+                Tippe auf das Molekül, das du für die Säure (H⁺-Donator) hältst
             </div>
 
             <div class="molecules">
@@ -320,18 +285,16 @@
             </div>
 
             <div class="message" id="message">
-                Tippe auf das Molekül, das du für die Säure (H⁺-Donator) hältst
+                Wähle eine Reaktion oder tippe auf ein Molekül
             </div>
 
             <div class="reaction-equation" id="equation"></div>
 
-            <button class="reset-btn" onclick="resetGame()">🔄 Neustart</button>
+            <button class="reset-btn" onclick="resetGame()">Neustart</button>
             
-            <div class="footer" id="copyright">
-                Copyright © 2024 Dr. P. Kiliszek
+            <div class="footer">
+                Copyright © 2026 Dr. P. Kiliszek
             </div>
-            
-            <div class="attempt-counter" id="attemptCounter"></div>
         </div>
     </div>
 
@@ -340,58 +303,42 @@
             'hcl-h2o': {
                 acid: { formula: 'HCl', conjugate: 'Cl⁻' },
                 base: { formula: 'H₂O', conjugate: 'H₃O⁺' },
-                equation: 'HCl + H₂O → Cl⁻ + H₃O⁺',
-                acidHint: 'HCl (Salzsäure) gibt leicht H⁺ ab',
-                baseHint: 'H₂O (Wasser) kann H⁺ aufnehmen'
+                equation: 'HCl + H₂O → Cl⁻ + H₃O⁺'
             },
             'nh3-h2o': {
                 acid: { formula: 'H₂O', conjugate: 'OH⁻' },
                 base: { formula: 'NH₃', conjugate: 'NH₄⁺' },
-                equation: 'NH₃ + H₂O → NH₄⁺ + OH⁻',
-                acidHint: 'H₂O (Wasser) gibt hier H⁺ an NH₃ ab',
-                baseHint: 'NH₃ (Ammoniak) ist eine Base'
+                equation: 'NH₃ + H₂O → NH₄⁺ + OH⁻'
             },
             'hcl-oh': {
                 acid: { formula: 'HCl', conjugate: 'Cl⁻' },
                 base: { formula: 'OH⁻', conjugate: 'H₂O' },
-                equation: 'HCl + OH⁻ → Cl⁻ + H₂O',
-                acidHint: 'HCl (Salzsäure) ist die stärkere Säure',
-                baseHint: 'OH⁻ (Hydroxid) ist eine starke Base'
+                equation: 'HCl + OH⁻ → Cl⁻ + H₂O'
             },
             'hco3-h3o': {
                 acid: { formula: 'H₃O⁺', conjugate: 'H₂O' },
                 base: { formula: 'HCO₃⁻', conjugate: 'H₂CO₃' },
-                equation: 'HCO₃⁻ + H₃O⁺ → H₂CO₃ + H₂O',
-                acidHint: 'H₃O⁺ (Oxonium) gibt leichter H⁺ ab',
-                baseHint: 'HCO₃⁻ (Hydrogencarbonat) kann H⁺ aufnehmen'
+                equation: 'HCO₃⁻ + H₃O⁺ → H₂CO₃ + H₂O'
             },
             'hno3-h2o': {
                 acid: { formula: 'HNO₃', conjugate: 'NO₃⁻' },
                 base: { formula: 'H₂O', conjugate: 'H₃O⁺' },
-                equation: 'HNO₃ + H₂O → NO₃⁻ + H₃O⁺',
-                acidHint: 'HNO₃ (Salpetersäure) ist eine starke Säure',
-                baseHint: 'H₂O (Wasser) wirkt hier als Base'
+                equation: 'HNO₃ + H₂O → NO₃⁻ + H₃O⁺'
             },
             'ch3cooh-h2o': {
                 acid: { formula: 'CH₃COOH', conjugate: 'CH₃COO⁻' },
                 base: { formula: 'H₂O', conjugate: 'H₃O⁺' },
-                equation: 'CH₃COOH + H₂O → CH₃COO⁻ + H₃O⁺',
-                acidHint: 'CH₃COOH (Essigsäure) gibt H⁺ ab',
-                baseHint: 'H₂O (Wasser) nimmt H⁺ auf'
+                equation: 'CH₃COOH + H₂O → CH₃COO⁻ + H₃O⁺'
             },
             'ch3coo-h3o': {
                 acid: { formula: 'H₃O⁺', conjugate: 'H₂O' },
                 base: { formula: 'CH₃COO⁻', conjugate: 'CH₃COOH' },
-                equation: 'CH₃COO⁻ + H₃O⁺ → CH₃COOH + H₂O',
-                acidHint: 'H₃O⁺ (Oxonium) ist die Säure',
-                baseHint: 'CH₃COO⁻ (Acetat) ist die Base'
+                equation: 'CH₃COO⁻ + H₃O⁺ → CH₃COOH + H₂O'
             },
             'h2so4-h2o': {
                 acid: { formula: 'H₂SO₄', conjugate: 'HSO₄⁻' },
                 base: { formula: 'H₂O', conjugate: 'H₃O⁺' },
-                equation: 'H₂SO₄ + H₂O → HSO₄⁻ + H₃O⁺',
-                acidHint: 'H₂SO₄ (Schwefelsäure) ist die stärkere Säure',
-                baseHint: 'H₂O (Wasser) ist hier die Base'
+                equation: 'H₂SO₄ + H₂O → HSO₄⁻ + H₃O⁺'
             }
         };
 
@@ -400,124 +347,105 @@
         let hPlusElement = null;
         let acidElement = null;
         let baseElement = null;
-        let attempts = 0;
-        let gameStarted = false;
-        let acidIdentified = false;
+        let gameActive = true;
 
         function initGame() {
             const reaction = reactions[currentReaction];
             const mol1 = document.getElementById('molecule1');
             const mol2 = document.getElementById('molecule2');
 
-            // Zeige beide Moleküle ohne Hinweis, wer Säure oder Base ist
-            mol1.innerHTML = createMoleculeHTML(reaction.acid.formula, false);
-            mol2.innerHTML = createMoleculeHTML(reaction.base.formula, false);
+            // Zeige beide Moleküle
+            mol1.innerHTML = createMoleculeHTML(reaction.acid.formula);
+            mol2.innerHTML = createMoleculeHTML(reaction.base.formula);
             
             // Speichere, welches Molekül die Säure ist
-            acidElement = reaction.acid.donates ? mol1 : mol2;
-            baseElement = reaction.acid.donates ? mol2 : mol1;
+            acidElement = reaction.acid.formula === 'HCl' || reaction.acid.formula === 'HNO₃' || 
+                         reaction.acid.formula === 'CH₃COOH' || reaction.acid.formula === 'H₂SO₄' ||
+                         reaction.acid.formula === 'H₃O⁺' || reaction.acid.formula === 'H₂O' && currentReaction === 'nh3-h2o' ? 
+                         mol1 : mol2;
+            baseElement = acidElement === mol1 ? mol2 : mol1;
             
-            // Reset states
+            // Reset
             document.getElementById('equation').classList.remove('show');
             document.getElementById('equation').textContent = '';
-            document.getElementById('message').innerHTML = '🤔 Tippe auf das Molekül, das H⁺ abgeben kann!';
-            document.getElementById('instruction').innerHTML = '🔍 Finde die Säure (H⁺-Donator)';
-            document.getElementById('copyright').style.display = 'block';
+            document.getElementById('message').innerHTML = 'Tippe auf das Molekül, das du für die Säure (H⁺-Donator) hältst';
+            document.getElementById('instruction').innerHTML = '🤔 Finde die Säure - tippe sie an!';
             
-            // Entferne alle Klassen von Bubbles
-            document.querySelectorAll('.bubble').forEach(b => {
-                b.classList.remove('acid-clickable', 'base-highlight', 'wrong-choice');
-            });
-            
-            acidIdentified = false;
-            gameStarted = true;
-            updateAttemptCounter();
+            gameActive = true;
+            dragging = false;
+            if (hPlusElement) {
+                hPlusElement.remove();
+                hPlusElement = null;
+            }
         }
 
-        function createMoleculeHTML(formula, showRole) {
+        function createMoleculeHTML(formula) {
             return `
-                <div class="bubble" onclick="handleMoleculeClick(this, '${formula}')" ontouchstart="handleMoleculeTouch(this, '${formula}')">
+                <div class="bubble" onclick="handleMoleculeClick(this, '${formula}')" ontouchstart="handleMoleculeTouch(event, this, '${formula}')">
                     ${formula}
                 </div>
             `;
         }
 
         function handleMoleculeClick(element, formula) {
-            if (!gameStarted || acidIdentified || dragging) return;
+            if (!gameActive || dragging) return;
             
             const moleculeWrapper = element.closest('.molecule-wrapper');
             const reaction = reactions[currentReaction];
+            
+            // Prüfe ob das angeklickte Molekül die Säure ist
             const isAcid = (moleculeWrapper === acidElement);
             
-            attempts++;
-            updateAttemptCounter();
-            
             if (isAcid) {
-                // Richtige Säure ausgewählt
-                element.classList.add('acid-clickable');
-                acidIdentified = true;
-                document.getElementById('message').innerHTML = '✅ Richtig! Das ist die Säure. Tippe nochmal, um H⁺ zu greifen!';
-                document.getElementById('instruction').innerHTML = '👆 Tippe jetzt auf die Säure, um H⁺ zu greifen';
+                // Richtige Säure - starte den Protonentransfer
+                element.classList.add('acid-bubble');
+                document.getElementById('message').innerHTML = '✅ Richtig! Jetzt ziehe das H⁺ zur Base';
+                document.getElementById('instruction').innerHTML = '👆 Ziehe das H⁺ zur anderen Blase';
                 
-                // Füge zweiten Click-Listener hinzu
-                element.removeEventListener('click', handleAcidClick);
-                element.removeEventListener('touchstart', handleAcidTouch);
-                element.addEventListener('click', handleAcidClick);
-                element.addEventListener('touchstart', handleAcidTouch, { passive: false });
+                // Entferne den normalen Click-Handler und füge den speziellen für's Ziehen hinzu
+                element.removeEventListener('click', handleMoleculeClick);
+                element.addEventListener('click', startDragging);
+                element.addEventListener('touchstart', startDraggingTouch, { passive: false });
             } else {
-                // Falsch - das war die Base
-                element.classList.add('wrong-choice');
-                document.getElementById('message').innerHTML = '❌ Das ist die Base. Die Säure gibt H⁺ ab! Versuche es nochmal.';
-                document.getElementById('instruction').innerHTML = '💡 ' + reaction.acidHint;
+                // Falsches Molekül
+                element.classList.add('base-highlight');
+                document.getElementById('message').innerHTML = '❌ Das ist nicht die Säure. Versuche es mit dem anderen Molekül!';
+                document.getElementById('instruction').innerHTML = '💡 Die Säure gibt H⁺ ab, die Base nimmt H⁺ auf';
                 
                 setTimeout(() => {
-                    element.classList.remove('wrong-choice');
-                }, 500);
+                    element.classList.remove('base-highlight');
+                }, 800);
             }
         }
 
-        function handleMoleculeTouch(element, formula) {
+        function handleMoleculeTouch(event, element, formula) {
             event.preventDefault();
             handleMoleculeClick(element, formula);
         }
 
-        function handleAcidClick(e) {
+        function startDragging(e) {
             e.preventDefault();
-            e.stopPropagation();
-            if (!dragging && acidIdentified) {
-                createHPlus(e);
-            }
-        }
-
-        function handleAcidTouch(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            if (!dragging && acidIdentified) {
-                const touch = e.touches[0];
-                createHPlus(touch);
-            }
-        }
-
-        function createHPlus(event) {
-            if (!acidIdentified) return;
+            if (!gameActive || dragging) return;
             
             const acidBubble = acidElement.querySelector('.bubble');
             const rect = acidBubble.getBoundingClientRect();
+            const clientX = e.clientX || (e.touches ? e.touches[0].clientX : 0);
+            const clientY = e.clientY || (e.touches ? e.touches[0].clientY : 0);
             
             dragging = true;
             
             // Ändere die Säure zu ihrer konjugierten Base
             const reaction = reactions[currentReaction];
-            const isFirstMoleculeAcid = (acidElement === document.getElementById('molecule1'));
-            const conjugateBase = isFirstMoleculeAcid ? reaction.acid.conjugate : reaction.base.conjugate;
-            acidElement.querySelector('.bubble').innerHTML = conjugateBase;
+            const conjugateBase = acidElement === document.getElementById('molecule1') ? 
+                reaction.acid.conjugate : reaction.base.conjugate;
+            acidBubble.innerHTML = conjugateBase;
             
             // Erstelle H⁺ Element
             hPlusElement = document.createElement('div');
             hPlusElement.className = 'h-plus';
             hPlusElement.textContent = 'H⁺';
-            hPlusElement.style.left = event.clientX + 'px';
-            hPlusElement.style.top = event.clientY + 'px';
+            hPlusElement.style.left = clientX + 'px';
+            hPlusElement.style.top = clientY + 'px';
             document.body.appendChild(hPlusElement);
 
             // Hebe die Base hervor
@@ -525,24 +453,17 @@
             baseBubble.classList.add('base-highlight');
 
             document.getElementById('instruction').innerHTML = '👆 Ziehe H⁺ zur Base!';
-            document.getElementById('message').innerHTML = 'Ziehe das Proton zur Base...';
+            document.getElementById('message').innerHTML = 'Ziehe das Proton auf die andere Blase';
 
             function onMove(e) {
                 e.preventDefault();
                 if (hPlusElement) {
-                    const clientX = e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : 0);
-                    const clientY = e.clientY || (e.touches && e.touches[0] ? e.touches[0].clientY : 0);
+                    const moveX = e.clientX || (e.touches ? e.touches[0].clientX : 0);
+                    const moveY = e.clientY || (e.touches ? e.touches[0].clientY : 0);
                     
-                    if (clientX && clientY) {
-                        hPlusElement.style.left = clientX + 'px';
-                        hPlusElement.style.top = clientY + 'px';
-                        
-                        // Dynamische Hervorhebung
-                        const baseRect = baseBubble.getBoundingClientRect();
-                        if (clientX >= baseRect.left && clientX <= baseRect.right &&
-                            clientY >= baseRect.top && clientY <= baseRect.bottom) {
-                            baseBubble.classList.add('base-highlight');
-                        }
+                    if (moveX && moveY) {
+                        hPlusElement.style.left = moveX + 'px';
+                        hPlusElement.style.top = moveY + 'px';
                     }
                 }
             }
@@ -554,40 +475,40 @@
                 const baseBubble = baseElement.querySelector('.bubble');
                 const baseRect = baseBubble.getBoundingClientRect();
                 
-                const clientX = e.clientX || (e.changedTouches && e.changedTouches[0] ? e.changedTouches[0].clientX : 0);
-                const clientY = e.clientY || (e.changedTouches && e.changedTouches[0] ? e.changedTouches[0].clientY : 0);
+                const endX = e.clientX || (e.changedTouches ? e.changedTouches[0].clientX : 0);
+                const endY = e.clientY || (e.changedTouches ? e.changedTouches[0].clientY : 0);
                 
-                if (clientX >= baseRect.left && clientX <= baseRect.right &&
-                    clientY >= baseRect.top && clientY <= baseRect.bottom) {
+                // Prüfe ob über der Base losgelassen
+                if (endX >= baseRect.left && endX <= baseRect.right &&
+                    endY >= baseRect.top && endY <= baseRect.bottom) {
                     
-                    // Erfolg
-                    baseBubble.innerHTML = isFirstMoleculeAcid ? reaction.base.conjugate : reaction.acid.conjugate;
+                    // Erfolg - Base ändern
+                    const conjugateAcid = baseElement === document.getElementById('molecule1') ? 
+                        reaction.acid.conjugate : reaction.base.conjugate;
+                    baseBubble.innerHTML = conjugateAcid;
                     
-                    // Zeige Reaktionsgleichung
-                    const equationElement = document.getElementById('equation');
-                    equationElement.textContent = reaction.equation;
-                    equationElement.classList.add('show');
+                    // Zeige Gleichung
+                    document.getElementById('equation').textContent = reaction.equation;
+                    document.getElementById('equation').classList.add('show');
                     
-                    document.getElementById('message').innerHTML = '🎉 Perfekt! Die Reaktion ist korrekt!';
-                    document.getElementById('instruction').innerHTML = '✅ Reaktion erfolgreich! Wähle eine neue Reaktion.';
+                    document.getElementById('message').innerHTML = '🎉 Super! Die Reaktion ist korrekt!';
+                    document.getElementById('instruction').innerHTML = '✅ Reaktion erfolgreich!';
                     
-                    if (hPlusElement) {
-                        hPlusElement.remove();
-                        hPlusElement = null;
-                    }
-                    
-                    baseBubble.classList.remove('base-highlight');
-                    dragging = false;
-                    
-                    // Copyright bleibt sichtbar
-                    document.getElementById('copyright').style.display = 'block';
-                    
+                    gameActive = false;
                 } else {
                     // Fehlschlag
                     document.getElementById('message').innerHTML = '❌ Das H⁺ muss zur Base! Versuche es nochmal.';
                     resetGame();
                 }
 
+                // Aufräumen
+                if (hPlusElement) {
+                    hPlusElement.remove();
+                    hPlusElement = null;
+                }
+                baseBubble.classList.remove('base-highlight');
+                dragging = false;
+                
                 removeListeners();
             }
 
@@ -606,13 +527,9 @@
             document.addEventListener('touchcancel', onEnd);
         }
 
-        function updateAttemptCounter() {
-            const counterElement = document.getElementById('attemptCounter');
-            if (attempts > 0) {
-                counterElement.textContent = `Versuche: ${attempts}`;
-            } else {
-                counterElement.textContent = '';
-            }
+        function startDraggingTouch(e) {
+            e.preventDefault();
+            startDragging(e);
         }
 
         function resetGame() {
@@ -621,13 +538,7 @@
                 hPlusElement = null;
             }
             dragging = false;
-            acidIdentified = false;
-            
-            // Entferne alle Hervorhebungen
-            document.querySelectorAll('.bubble').forEach(b => {
-                b.classList.remove('acid-clickable', 'base-highlight', 'wrong-choice');
-            });
-            
+            gameActive = true;
             initGame();
         }
 
@@ -638,7 +549,6 @@
                 document.querySelectorAll('.reaction-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
                 currentReaction = this.dataset.reaction;
-                attempts = 0;
                 resetGame();
             });
             
@@ -647,7 +557,6 @@
                 document.querySelectorAll('.reaction-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
                 currentReaction = this.dataset.reaction;
-                attempts = 0;
                 resetGame();
             }, { passive: false });
         });
