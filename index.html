@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brønsted-Säure-Base-Reaktionen</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 10px;
+        }
+        .game-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 800px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 0;
+            font-size: 24px;
+        }
+        .reaction-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .reaction-btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 25px;
+            background-color: #f0f0f0;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .reaction-btn:hover {
+            background-color: #e0e0e0;
+        }
+        .reaction-btn.active {
+            background-color: #667eea;
+            color: white;
+        }
+        .game-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+        .molecules {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            gap: 20px;
+        }
+        .molecule {
+            flex: 1;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .molecule.dragging {
+            opacity: 0.5;
+        }
+        .molecule.can-donate {
+            animation: pulse 1.5s infinite;
+        }
+        .bubble {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #ffffff, #e6e6e6);
+            box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            position: relative;
+            transition: all 0.3s;
+        }
+        .bubble.small {
+            width: 80px;
+            height: 80px;
+            font-size: 16px;
+        }
+        .h-plus {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #ff6b6b, #ff3838);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: grab;
+            box-shadow: 0 5px 15px rgba(255,56,56,0.4);
+            transition: all 0.3s;
+            z-index: 100;
+        }
+        .h-plus.dragging {
+            opacity: 0.7;
+            transform: scale(0.9);
+            cursor: grabbing;
+        }
+        .message {
+            text-align: center;
+            font-size: 18px;
+            color: #333;
+            min-height: 60px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            width: 100%;
+        }
+        .reset-btn {
+            padding: 10px 30px;
+            border: none;
+            border-radius: 25px;
+            background-color: #667eea;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .reset-btn:hover {
+            background-color: #5a67d8;
+        }
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+            }
+        }
+        .arrow {
+            font-size: 30px;
+            color: #666;
+        }
+        .reaction-equation {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            padding: 10px;
+            background-color: #e3f2fd;
+            border-radius: 10px;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>🧪 Brønsted-Säure-Base-Reaktionen 🧪</h1>
+        
+        <div class="reaction-selector">
+            <button class="reaction-btn active" data-reaction="hcl-h2o">HCl + H₂O</button>
+            <button class="reaction-btn" data-reaction="nh3-h2o">NH₃ + H₂O</button>
+            <button class="reaction-btn" data-reaction="hcl-oh">HCl + OH⁻</button>
+            <button class="reaction-btn" data-reaction="hco3-h3o">HCO₃⁻ + H₃O⁺</button>
+            <button class="reaction-btn" data-reaction="hno3-h2o">HNO₃ + H₂O</button>
+            <button class="reaction-btn" data-reaction="ch3cooh-h2o">CH₃COOH + H₂O</button>
+            <button class="reaction-btn" data-reaction="ch3coo-h3o">CH₃COO⁻ + H₃O⁺</button>
+            <button class="reaction-btn" data-reaction="h2so4-h2o">H₂SO₄ + H₂O</button>
+        </div>
+
+        <div class="game-area">
+            <div class="molecules">
+                <div class="molecule" id="molecule1"></div>
+                <div class="arrow">➕</div>
+                <div class="molecule" id="molecule2"></div>
+            </div>
+
+            <div class="message" id="message">
+                Tippe auf die Säure (H⁺-Donator), um das Proton zu greifen!
+            </div>
+
+            <div class="reaction-equation" id="equation"></div>
+
+            <button class="reset-btn" onclick="resetGame()">Neustart</button>
+        </div>
+    </div>
+
+    <script>
+        const reactions = {
+            'hcl-h2o': {
+                acid: { formula: 'HCl', conjugate: 'Cl⁻', donates: true },
+                base: { formula: 'H₂O', conjugate: 'H₃O⁺', donates: false },
+                equation: 'HCl + H₂O → Cl⁻ + H₃O⁺'
+            },
+            'nh3-h2o': {
+                acid: { formula: 'H₂O', conjugate: 'OH⁻', donates: true },
+                base: { formula: 'NH₃', conjugate: 'NH₄⁺', donates: false },
+                equation: 'NH₃ + H₂O → NH₄⁺ + OH⁻'
+            },
+            'hcl-oh': {
+                acid: { formula: 'HCl', conjugate: 'Cl⁻', donates: true },
+                base: { formula: 'OH⁻', conjugate: 'H₂O', donates: false },
+                equation: 'HCl + OH⁻ → Cl⁻ + H₂O'
+            },
+            'hco3-h3o': {
+                acid: { formula: 'H₃O⁺', conjugate: 'H₂O', donates: true },
+                base: { formula: 'HCO₃⁻', conjugate: 'H₂CO₃', donates: false },
+                equation: 'HCO₃⁻ + H₃O⁺ → H₂CO₃ + H₂O'
+            },
+            'hno3-h2o': {
+                acid: { formula: 'HNO₃', conjugate: 'NO₃⁻', donates: true },
+                base: { formula: 'H₂O', conjugate: 'H₃O⁺', donates: false },
+                equation: 'HNO₃ + H₂O → NO₃⁻ + H₃O⁺'
+            },
+            'ch3cooh-h2o': {
+                acid: { formula: 'CH₃COOH', conjugate: 'CH₃COO⁻', donates: true },
+                base: { formula: 'H₂O', conjugate: 'H₃O⁺', donates: false },
+                equation: 'CH₃COOH + H₂O → CH₃COO⁻ + H₃O⁺'
+            },
+            'ch3coo-h3o': {
+                acid: { formula: 'H₃O⁺', conjugate: 'H₂O', donates: true },
+                base: { formula: 'CH₃COO⁻', conjugate: 'CH₃COOH', donates: false },
+                equation: 'CH₃COO⁻ + H₃O⁺ → CH₃COOH + H₂O'
+            },
+            'h2so4-h2o': {
+                acid: { formula: 'H₂SO₄', conjugate: 'HSO₄⁻', donates: true },
+                base: { formula: 'H₂O', conjugate: 'H₃O⁺', donates: false },
+                equation: 'H₂SO₄ + H₂O → HSO₄⁻ + H₃O⁺'
+            }
+        };
+
+        let currentReaction = 'hcl-h2o';
+        let dragging = false;
+        let hPlusElement = null;
+        let acidElement = null;
+        let baseElement = null;
+
+        function initGame() {
+            const reaction = reactions[currentReaction];
+            const mol1 = document.getElementById('molecule1');
+            const mol2 = document.getElementById('molecule2');
+
+            // Bestimme welche Seite die Säure ist
+            if (reaction.acid.donates) {
+                mol1.innerHTML = createMoleculeHTML(reaction.acid.formula, true);
+                mol2.innerHTML = createMoleculeHTML(reaction.base.formula, false);
+                acidElement = mol1;
+                baseElement = mol2;
+            } else {
+                mol1.innerHTML = createMoleculeHTML(reaction.base.formula, false);
+                mol2.innerHTML = createMoleculeHTML(reaction.acid.formula, true);
+                acidElement = mol2;
+                baseElement = mol1;
+            }
+
+            document.getElementById('equation').textContent = reaction.equation;
+            document.getElementById('message').innerHTML = 'Tippe auf die Säure (H⁺-Donator), um das Proton zu greifen!';
+
+            // Event-Listener für die Säure
+            const acidBubble = acidElement.querySelector('.bubble');
+            if (acidBubble) {
+                acidBubble.classList.add('can-donate');
+                acidBubble.onclick = function(e) {
+                    if (!dragging) {
+                        createHPlus(e);
+                    }
+                };
+            }
+        }
+
+        function createMoleculeHTML(formula, isAcid) {
+            return `
+                <div class="bubble ${!isAcid ? 'small' : ''}">
+                    ${formula}
+                </div>
+                <div>${isAcid ? 'Säure (H⁺-Donator)' : 'Base (H⁺-Akzeptor)'}</div>
+            `;
+        }
+
+        function createHPlus(event) {
+            if (dragging) return;
+
+            const acidBubble = acidElement.querySelector('.bubble');
+            const rect = acidBubble.getBoundingClientRect();
+            
+            dragging = true;
+            
+            // Entferne das H⁺ von der Säure
+            hPlusElement = document.createElement('div');
+            hPlusElement.className = 'h-plus';
+            hPlusElement.textContent = 'H⁺';
+            hPlusElement.style.left = (rect.left + rect.width/2 - 20) + 'px';
+            hPlusElement.style.top = (rect.top + rect.height/2 - 20) + 'px';
+            document.body.appendChild(hPlusElement);
+
+            // Ändere die Säure zu ihrer konjugierten Base
+            const reaction = reactions[currentReaction];
+            const conjugateBase = reaction.acid.donates ? reaction.acid.conjugate : reaction.base.conjugate;
+            acidElement.querySelector('.bubble').innerHTML = conjugateBase;
+
+            // Event-Listener für Mausbewegung
+            function onMouseMove(e) {
+                if (hPlusElement) {
+                    hPlusElement.style.left = (e.clientX - 20) + 'px';
+                    hPlusElement.style.top = (e.clientY - 20) + 'px';
+                }
+            }
+
+            // Event-Listener für Loslassen
+            function onMouseUp(e) {
+                if (!hPlusElement) return;
+
+                const baseBubble = baseElement.querySelector('.bubble');
+                const baseRect = baseBubble.getBoundingClientRect();
+                
+                // Prüfe ob H⁺ über der Base losgelassen wurde
+                if (e.clientX >= baseRect.left && e.clientX <= baseRect.right &&
+                    e.clientY >= baseRect.top && e.clientY <= baseRect.bottom) {
+                    
+                    // Erfolgreiche Reaktion
+                    baseBubble.innerHTML = reactions[currentReaction].base.conjugate;
+                    
+                    document.getElementById('message').innerHTML = '🎉 Super! Die Reaktion ist abgelaufen!';
+                    
+                    // Entferne H⁺
+                    if (hPlusElement) {
+                        hPlusElement.remove();
+                        hPlusElement = null;
+                    }
+                    
+                    // Deaktiviere weiteren Drag
+                    dragging = false;
+                } else {
+                    // Fehlgeschlagen - setze alles zurück
+                    document.getElementById('message').innerHTML = '❌ Das H⁺ muss zur Base gezogen werden! Versuche es noch einmal.';
+                    resetGame();
+                }
+
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+            }
+
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+        }
+
+        function resetGame() {
+            if (hPlusElement) {
+                hPlusElement.remove();
+                hPlusElement = null;
+            }
+            dragging = false;
+            initGame();
+        }
+
+        // Event-Listener für Reaktionsauswahl
+        document.querySelectorAll('.reaction-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.reaction-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentReaction = this.dataset.reaction;
+                resetGame();
+            });
+        });
+
+        // Spiel starten
+        initGame();
+    </script>
+</body>
+</html>
